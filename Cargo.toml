@@ -1,0 +1,18 @@
+[package]
+name = "slick-models"
+version = "0.1.0"
+authors = ["Saju Thankappan <sajuthankappan@gmail.com>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+description = "read and write data for mongodb"
+homepage = "https://github.com/sajuthankappan/slick-models-rs"
+repository = "https://github.com/sajuthankappan/slick-models-rs"
+readme = "README.md"
+keywords = ["mongodb"]
+categories = ["database"]
+publish = false
+
+[dependencies]
+bson = "1.0.0"
+getset = "0.1.1"
+serde = { version = "1.0.114", features = ["derive"] }
