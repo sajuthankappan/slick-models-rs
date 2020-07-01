@@ -99,8 +99,12 @@ pub struct Audits {
 
     #[serde(rename = "third-party-summary")]
     third_party_summary: ThirdPartySummary,
+    
+    #[serde(rename = "largest-contentful-paint-element")]
+    largest_contentful_paint_element: Option<LargestContentfulPaintElement>,
+    
+    
     //TODOs
-    //largest-contentful-paint-element
     //layout-shift-elements
     //uses-long-cache-ttl
     //total-byte-weight
@@ -271,6 +275,8 @@ pub struct ResourceSummary {
     title: String,
     description: String,
     score: Option<f64>,
+    #[serde(rename = "scoreDisplayMode")]
+    score_display_mode: String,
     #[serde(rename = "displayValue")]
     display_value: String,
     #[serde(rename = "details")]
@@ -301,6 +307,43 @@ pub struct ResourceSummaryDetailsItem {
 #[getset(get = "pub", set = "pub")]
 pub struct ThirdPartySummary {
     //TODO
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct LargestContentfulPaintElement {
+    id: String,
+    title: String,
+    description: String,
+    score: Option<f64>,
+    #[serde(rename = "scoreDisplayMode")]
+    score_display_mode: String,
+    #[serde(rename = "displayValue")]
+    display_value: String,
+    #[serde(rename = "details")]
+    details: ResourceSummaryDetails,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct NodeContainer {
+    node: Node,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct Node {
+    #[serde(rename = "type")]
+    node_type: String,
+    path: String,
+    selector: String,
+    snippet: String,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct ElementDetails {
+    items: Vec<NodeContainer>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]

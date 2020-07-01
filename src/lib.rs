@@ -1,6 +1,6 @@
 pub mod lh_models;
 
-use lh_models::{AuditValue, Throttling};
+use lh_models::{AuditValue, Throttling, LargestContentfulPaintElement};
 use getset::{Getters, Setters};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -54,6 +54,9 @@ pub struct AuditDetail {
 
     #[serde(rename = "webVitals")]
     web_vitals: WebVitals,
+
+    #[serde(rename = "largestContentfulPaintElement")]
+    largest_contentful_paint_element: Option<LargestContentfulPaintElement>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
