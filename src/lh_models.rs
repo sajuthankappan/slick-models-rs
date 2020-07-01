@@ -321,7 +321,7 @@ pub struct LargestContentfulPaintElement {
     #[serde(rename = "displayValue")]
     display_value: String,
     #[serde(rename = "details")]
-    details: ResourceSummaryDetails,
+    details: ElementDetails,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
