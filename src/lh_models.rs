@@ -153,14 +153,14 @@ pub struct NetworkRequests {
     title: String,
     description: String,
     score: Option<f64>,
-    details: NetworkRequestDetails,
+    details: Details<NetworkRequestDetail>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct NetworkRequestDetails {
+pub struct Details<T> {
     headings: Vec<Heading>,
-    items: Vec<NetworkRequestDetailsItem>,
+    items: Vec<T>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
@@ -179,7 +179,7 @@ pub struct Heading {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct NetworkRequestDetailsItem {
+pub struct NetworkRequestDetail {
     url: String,
 
     #[serde(rename = "startTime")]
@@ -214,19 +214,12 @@ pub struct NetworkRtt {
     title: String,
     description: String,
     score: Option<f64>,
-    details: NetworkRttDetails,
+    details: Details<NetworkRttDetail>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct NetworkRttDetails {
-    headings: Vec<Heading>,
-    items: Vec<NetworkRttDetailsItem>,
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct NetworkRttDetailsItem {
+pub struct NetworkRttDetail {
     origin: String,
     rtt: f64,
 }
@@ -279,20 +272,12 @@ pub struct ResourceSummary {
     score_display_mode: String,
     #[serde(rename = "displayValue")]
     display_value: String,
-    #[serde(rename = "details")]
-    details: ResourceSummaryDetails,
+    details: Details<ResourceSummaryDetail>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct ResourceSummaryDetails {
-    headings: Vec<Heading>,
-    items: Vec<ResourceSummaryDetailsItem>,
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct ResourceSummaryDetailsItem {
+pub struct ResourceSummaryDetail {
     #[serde(rename = "resourceType")]
     resource_type: String,
     #[serde(rename = "label")]
@@ -320,8 +305,7 @@ pub struct LargestContentfulPaintElement {
     score_display_mode: String,
     #[serde(rename = "displayValue")]
     display_value: String,
-    #[serde(rename = "details")]
-    details: ElementDetails,
+    details: Details<NodeContainer>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
@@ -338,12 +322,6 @@ pub struct Node {
     path: String,
     selector: String,
     snippet: String,
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct ElementDetails {
-    items: Vec<NodeContainer>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]

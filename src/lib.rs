@@ -1,10 +1,10 @@
 pub mod lh_models;
 
-use lh_models::{AuditValue, Throttling, LargestContentfulPaintElement};
+use bson::oid::ObjectId;
 use getset::{Getters, Setters};
+use lh_models::{AuditValue, LargestContentfulPaintElement, NetworkRequests, Throttling};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use bson::oid::ObjectId;
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default)]
 #[getset(get = "pub", set = "pub")]
@@ -57,6 +57,9 @@ pub struct AuditDetail {
 
     #[serde(rename = "largestContentfulPaintElement")]
     largest_contentful_paint_element: Option<LargestContentfulPaintElement>,
+
+    #[serde(rename = "networkRequests")]
+    network_requests: Option<NetworkRequests>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
