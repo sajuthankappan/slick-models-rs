@@ -143,6 +143,9 @@ pub struct Site {
     #[serde(rename = "pages")]
     pages: Vec<Page>,
 
+    #[serde(rename = "auditProfiles")]
+    audit_profiles: Option<Vec<AuditProfile>>,
+
     #[serde(rename = "lighthouseSettings")]
     lighthouse_settings: LighthouseSettings,
 }
@@ -160,6 +163,9 @@ pub struct Page {
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct AuditProfile {
+    #[serde(rename = "profileId")]
+    profile_id: String,
+
     #[serde(rename = "name")]
     name: String,
 
@@ -168,14 +174,19 @@ pub struct AuditProfile {
 
     #[serde(rename = "lighthouseVersion")]
     lighthouse_version: String,
+
+    #[serde(rename = "blockedUrlPatterns")]
+    blocked_url_patterns: Option<Vec<String>>
 }
 
 impl AuditProfile {
-    pub fn new(device: String, lighthouse_version: String) -> AuditProfile {
+    pub fn new(profile_id: String, name: String, device: String, lighthouse_version: String) -> AuditProfile {
         AuditProfile {
-            name: format!("{}-{}", &device, &lighthouse_version),
+            profile_id,
+            name,
             device,
             lighthouse_version,
+            blocked_url_patterns: None,
         }
     }
 }
