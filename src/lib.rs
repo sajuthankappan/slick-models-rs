@@ -179,11 +179,16 @@ pub struct AuditProfile {
     lighthouse_version: String,
 
     #[serde(rename = "blockedUrlPatterns")]
-    blocked_url_patterns: Option<Vec<String>>
+    blocked_url_patterns: Option<Vec<String>>,
 }
 
 impl AuditProfile {
-    pub fn new(profile_id: String, name: String, device: String, lighthouse_version: String) -> AuditProfile {
+    pub fn new(
+        profile_id: String,
+        name: String,
+        device: String,
+        lighthouse_version: String,
+    ) -> AuditProfile {
         AuditProfile {
             profile_id,
             name,
@@ -193,7 +198,6 @@ impl AuditProfile {
         }
     }
 }
-
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
@@ -227,6 +231,34 @@ pub struct AuditSummary {
 
     #[serde(rename = "auditDetailId")]
     audit_detail_id: ObjectId,
+}
+
+impl AuditSummary {
+    pub fn new(
+        site_id: ObjectId,
+        site_run_id: i32,
+        page_id: String,
+        audit_profile_id: String,
+        audit_profile: AuditProfile,
+        fetch_time: String,
+        categories: Categories,
+        config_settings: ConfigSettings,
+        web_vitals: WebVitals,
+        audit_detail_id: ObjectId,
+    ) -> AuditSummary {
+        AuditSummary {
+            site_id,
+            site_run_id,
+            page_id,
+            audit_profile_id,
+            audit_profile,
+            fetch_time,
+            categories,
+            config_settings,
+            web_vitals,
+            audit_detail_id,
+        }
+    }
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
