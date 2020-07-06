@@ -144,10 +144,13 @@ pub struct Site {
     pages: Vec<Page>,
 
     #[serde(rename = "auditProfiles")]
-    audit_profiles: Option<Vec<AuditProfile>>,
+    audit_profiles: Vec<AuditProfile>,
 
     #[serde(rename = "lighthouseSettings")]
     lighthouse_settings: LighthouseSettings,
+
+    #[serde(rename = "lastRunId")]
+    last_run_id: i32,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
@@ -191,9 +194,44 @@ impl AuditProfile {
     }
 }
 
+
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct AuditSummary {
+    #[serde(rename = "siteId")]
+    site_id: ObjectId,
+
+    #[serde(rename = "siteRunId")]
+    site_run_id: i32,
+
+    #[serde(rename = "pageId")]
+    page_id: String,
+
+    #[serde(rename = "auditProfileId")]
+    audit_profile_id: String,
+
+    #[serde(rename = "auditProfile")]
+    audit_profile: AuditProfile,
+
+    #[serde(rename = "fetchTime")]
+    fetch_time: String,
+
+    #[serde(rename = "categories")]
+    categories: Categories,
+
+    #[serde(rename = "configSettings")]
+    config_settings: ConfigSettings,
+
+    #[serde(rename = "webVitals")]
+    web_vitals: WebVitals,
+
+    #[serde(rename = "auditDetailId")]
+    audit_detail_id: ObjectId,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct AuditSummaryOld {
     #[serde(rename = "pageName")]
     page_name: String,
 
@@ -225,7 +263,7 @@ pub struct AuditSummary {
     audit_detail_id: ObjectId,
 }
 
-impl AuditSummary {
+impl AuditSummaryOld {
     pub fn new(
         page_name: String,
         audit_profile: AuditProfile,
@@ -237,8 +275,8 @@ impl AuditSummary {
         config_settings: ConfigSettings,
         web_vitals: WebVitals,
         audit_detail_id: ObjectId,
-    ) -> AuditSummary {
-        AuditSummary {
+    ) -> AuditSummaryOld {
+        AuditSummaryOld {
             page_name,
             audit_profile,
             lighthouse_version,
@@ -266,7 +304,7 @@ pub struct PageAuditSummary {
     url: String,
 
     #[serde(rename = "auditSummaries")]
-    audit_summaries: HashMap<String, AuditSummary>,
+    audit_summaries: HashMap<String, AuditSummaryOld>,
 }
 
 impl PageAuditSummary {
@@ -279,7 +317,7 @@ impl PageAuditSummary {
         }
     }
 
-    pub fn add_audit_summary(&mut self, audit_summary: AuditSummary) {
+    pub fn add_audit_summary(&mut self, audit_summary: AuditSummaryOld) {
         let audit_profile_name = format!(
             "{}-{}",
             audit_summary.audit_profile.device, audit_summary.lighthouse_version
