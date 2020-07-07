@@ -167,7 +167,7 @@ pub struct Page {
 #[getset(get = "pub", set = "pub")]
 pub struct AuditProfile {
     #[serde(rename = "profileId")]
-    profile_id: Option<String>,
+    profile_id: String,
 
     #[serde(rename = "name")]
     name: String,
@@ -190,7 +190,7 @@ impl AuditProfile {
         lighthouse_version: String,
     ) -> AuditProfile {
         AuditProfile {
-            profile_id: Some(profile_id),
+            profile_id,
             name,
             device,
             lighthouse_version,
