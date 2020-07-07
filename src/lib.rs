@@ -167,7 +167,7 @@ pub struct Page {
 #[getset(get = "pub", set = "pub")]
 pub struct AuditProfile {
     #[serde(rename = "profileId")]
-    profile_id: String,
+    profile_id: Option<String>,
 
     #[serde(rename = "name")]
     name: String,
