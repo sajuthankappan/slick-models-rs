@@ -156,6 +156,9 @@ pub struct Site {
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct Page {
+    #[serde(rename = "id")]
+    id: String,
+
     #[serde(rename = "name")]
     name: String,
 
@@ -167,7 +170,7 @@ pub struct Page {
 #[getset(get = "pub", set = "pub")]
 pub struct AuditProfile {
     #[serde(rename = "profileId")]
-    profile_id: String,
+    id: String,
 
     #[serde(rename = "name")]
     name: String,
@@ -184,13 +187,13 @@ pub struct AuditProfile {
 
 impl AuditProfile {
     pub fn new(
-        profile_id: String,
+        id: String,
         name: String,
         device: String,
         lighthouse_version: String,
     ) -> AuditProfile {
         AuditProfile {
-            profile_id,
+            id,
             name,
             device,
             lighthouse_version,
