@@ -169,7 +169,7 @@ pub struct Page {
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct AuditProfile {
-    #[serde(rename = "profileId")]
+    #[serde(rename = "id")]
     id: String,
 
     #[serde(rename = "name")]
