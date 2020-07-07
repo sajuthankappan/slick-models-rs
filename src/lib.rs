@@ -190,7 +190,7 @@ impl AuditProfile {
         lighthouse_version: String,
     ) -> AuditProfile {
         AuditProfile {
-            profile_id,
+            profile_id: Some(profile_id),
             name,
             device,
             lighthouse_version,
