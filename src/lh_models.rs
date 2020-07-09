@@ -52,58 +52,61 @@ pub struct Environment {}
 #[getset(get = "pub", set = "pub")]
 pub struct Audits {
     #[serde(rename = "first-contentful-paint")]
-    first_contentful_paint: AuditValue,
+    first_contentful_paint: AuditSimple,
 
     #[serde(rename = "largest-contentful-paint")]
-    largest_contentful_paint: Option<AuditValue>,
+    largest_contentful_paint: Option<AuditSimple>,
+
+    #[serde(rename = "largest-contentful-paint-element")]
+    largest_contentful_paint_element: Option<AuditTable<NodeContainer>>,
 
     #[serde(rename = "first-meaningful-paint")]
-    first_meaningful_paint: AuditValue,
+    first_meaningful_paint: AuditSimple,
+
     #[serde(rename = "speed-index")]
-    speed_index: AuditValue,
+    speed_index: AuditSimple,
 
     #[serde(rename = "total-blocking-time")]
-    total_blocking_time: AuditValue,
+    total_blocking_time: AuditSimple,
 
     #[serde(rename = "max-potential-fid")]
-    max_potential_fid: AuditValue,
+    max_potential_fid: AuditSimple,
 
     #[serde(rename = "cumulative-layout-shift")]
-    cumulative_layout_shift: Option<AuditValue>,
+    cumulative_layout_shift: Option<AuditSimple>,
 
     #[serde(rename = "server-response-time")]
-    server_response_time: Option<AuditValue>, // TODO: More fields
+    server_response_time: Option<AuditSimple>, // TODO: More fields
+
     #[serde(rename = "first-cpu-idle")]
-    first_cpu_idle: AuditValue,
+    first_cpu_idle: AuditSimple,
 
     #[serde(rename = "interactive")]
-    interactive: AuditValue,
+    interactive: AuditSimple,
 
     #[serde(rename = "network-requests")]
-    network_requests: NetworkRequests,
+    network_requests: AuditTable<NetworkRequest>,
 
     #[serde(rename = "network-rtt")]
-    network_rtt: NetworkRtt,
+    network_rtt: AuditTable<NetworkRttDetail>,
 
     #[serde(rename = "network-server-latency")]
-    network_server_latency: NetworkServerLatency,
+    network_server_latency: AuditSimple,
 
     #[serde(rename = "main-thread-tasks")]
-    main_thread_tasks: MainThreadTasks,
+    main_thread_tasks: AuditTable<Task>,
 
     #[serde(rename = "metrics")]
-    metrics: Metrics,
+    metrics: AuditSimple,
 
     #[serde(rename = "resource-summary")]
-    resource_summary: ResourceSummary,
+    resource_summary: AuditTable<Resource>,
 
     #[serde(rename = "third-party-summary")]
-    third_party_summary: ThirdPartySummary,
-    
-    #[serde(rename = "largest-contentful-paint-element")]
-    largest_contentful_paint_element: Option<LargestContentfulPaintElement>,
-    
-    
+    third_party_summary: AuditTable<ThirdPartyDetail>,
+
+    #[serde(rename = "screenshot-thumbnails")]
+    screenshot_thumbnails: AuditTable<Filmstrip>,
     //TODOs
     //layout-shift-elements
     //uses-long-cache-ttl
@@ -127,11 +130,11 @@ pub struct Audits {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct AuditValue {
+pub struct AuditSimple {
     id: String,
     title: String,
     description: String,
-    score: f64,
+    score: Option<f64>,
 
     #[serde(rename = "scoreDisplayMode")]
     score_display_mode: String,
@@ -143,23 +146,36 @@ pub struct AuditValue {
     numeric_unit: Option<String>,
 
     #[serde(rename = "displayValue")]
-    display_value: String,
+    display_value: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct NetworkRequests {
+pub struct AuditTable<T> {
     id: String,
     title: String,
     description: String,
     score: Option<f64>,
-    details: Details<NetworkRequestDetail>,
+
+    #[serde(rename = "scoreDisplayMode")]
+    score_display_mode: String,
+
+    #[serde(rename = "numericValue")]
+    numeric_value: Option<f64>,
+
+    #[serde(rename = "numericUnit")]
+    numeric_unit: Option<String>,
+
+    #[serde(rename = "displayValue")]
+    display_value: Option<String>,
+
+    details: Details<T>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct Details<T> {
-    headings: Vec<Heading>,
+    headings: Option<Vec<Heading>>,
     items: Vec<T>,
 }
 
@@ -179,11 +195,11 @@ pub struct Heading {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct NetworkRequestDetail {
+pub struct NetworkRequest {
     url: String,
 
     #[serde(rename = "startTime")]
-    start_time: f64,
+    start_time: Option<f64>,
 
     #[serde(rename = "endTime")]
     end_time: Option<f64>,
@@ -209,16 +225,6 @@ pub struct NetworkRequestDetail {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct NetworkRtt {
-    id: String,
-    title: String,
-    description: String,
-    score: Option<f64>,
-    details: Details<NetworkRttDetail>,
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
 pub struct NetworkRttDetail {
     origin: String,
     rtt: f64,
@@ -226,58 +232,15 @@ pub struct NetworkRttDetail {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct NetworkServerLatency {
-    //TODO
+pub struct Task {
+    duration: f64,
+    #[serde(rename = "startTime")]
+    start_time: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct MainThreadTasks {
-    //TODO
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct Metrics {
-    id: String,
-    title: String,
-    description: String,
-    score: Option<f64>,
-    #[serde(rename = "scoreDisplayMode")]
-    score_display_mode: String,
-    #[serde(rename = "numericValue")]
-    numeric_value: f64,
-
-    #[serde(rename = "numericUnit")]
-    numeric_unit: Option<String>,
-
-    #[serde(rename = "details")]
-    details: MetricsDetails,
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct MetricsDetails {
-    //TODO
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct ResourceSummary {
-    id: String,
-    title: String,
-    description: String,
-    score: Option<f64>,
-    #[serde(rename = "scoreDisplayMode")]
-    score_display_mode: String,
-    #[serde(rename = "displayValue")]
-    display_value: String,
-    details: Details<ResourceSummaryDetail>,
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct ResourceSummaryDetail {
+pub struct Resource {
     #[serde(rename = "resourceType")]
     resource_type: String,
     #[serde(rename = "label")]
@@ -286,26 +249,6 @@ pub struct ResourceSummaryDetail {
     request_count: i32,
     #[serde(rename = "transferSize")]
     transfer_size: Option<i64>,
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct ThirdPartySummary {
-    //TODO
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct LargestContentfulPaintElement {
-    id: String,
-    title: String,
-    description: String,
-    score: Option<f64>,
-    #[serde(rename = "scoreDisplayMode")]
-    score_display_mode: String,
-    #[serde(rename = "displayValue")]
-    display_value: String,
-    details: Details<NodeContainer>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
@@ -322,6 +265,42 @@ pub struct Node {
     path: String,
     selector: String,
     snippet: String,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct UrlProtocol {
+    url: String,
+    protocol: String,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct ThirdPartyDetail {
+    entity: ThirdPartyEntity,
+    #[serde(rename = "transferSize")]
+    transfer_size: i64,
+    #[serde(rename = "mainThreadTime")]
+    main_thread_time: f64,
+    #[serde(rename = "blockingTime")]
+    blocking_time: f64,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct ThirdPartyEntity {
+    #[serde(rename = "type")]
+    entity_type: String,
+    text: String,
+    url: String,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct Filmstrip {
+    timing: i64,
+    timestamp: i64,
+    data: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]

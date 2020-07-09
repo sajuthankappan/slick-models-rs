@@ -2,7 +2,10 @@ pub mod lh_models;
 
 use bson::oid::ObjectId;
 use getset::{Getters, Setters};
-use lh_models::{AuditValue, LargestContentfulPaintElement, NetworkRequests, Throttling};
+use lh_models::{
+    AuditSimple, AuditTable, Filmstrip, NetworkRequest, NodeContainer, Resource, ThirdPartyDetail,
+    Throttling,
+};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -35,7 +38,7 @@ pub struct SiteScoreParameters {
 #[getset(get = "pub", set = "pub")]
 pub struct AuditDetail {
     #[serde(rename = "lighthouseVersion")]
-    pub lighthouse_version: String,
+    lighthouse_version: String,
 
     #[serde(rename = "requestedUrl")]
     requested_url: String,
@@ -56,41 +59,50 @@ pub struct AuditDetail {
     web_vitals: WebVitals,
 
     #[serde(rename = "largestContentfulPaintElement")]
-    largest_contentful_paint_element: Option<LargestContentfulPaintElement>,
+    largest_contentful_paint_element: Option<AuditTable<NodeContainer>>,
 
     #[serde(rename = "networkRequests")]
-    network_requests: Option<NetworkRequests>,
+    network_requests: Option<AuditTable<NetworkRequest>>,
+
+    #[serde(rename = "resourceSummary")]
+    resource_summary: Option<AuditTable<Resource>>,
+
+    #[serde(rename = "thirdPartySummary")]
+    third_party_summary: Option<AuditTable<ThirdPartyDetail>>,
+
+    #[serde(rename = "screenshotThumbnails")]
+    screenshot_thumbnails: Option<AuditTable<Filmstrip>>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct WebVitals {
     #[serde(rename = "firstContentfulPaint")]
-    first_contentful_paint: AuditValue,
+    first_contentful_paint: AuditSimple,
 
     #[serde(rename = "speedIndex")]
-    speed_index: AuditValue,
+    speed_index: AuditSimple,
 
     #[serde(rename = "largestContentfulPaint")]
-    largest_contentful_paint: Option<AuditValue>,
+    largest_contentful_paint: Option<AuditSimple>,
 
     #[serde(rename = "interactive")]
-    interactive: AuditValue,
+    interactive: AuditSimple,
 
     #[serde(rename = "totalBlockingTime")]
-    total_blocking_time: AuditValue,
+    total_blocking_time: AuditSimple,
 
     #[serde(rename = "cumulativeLayoutShift")]
-    cumulative_layout_shift: Option<AuditValue>,
+    cumulative_layout_shift: Option<AuditSimple>,
 
     //LH5 metrics; but not in LH6
     #[serde(rename = "maxPotentialFid")]
-    max_potential_fid: AuditValue,
+    max_potential_fid: AuditSimple,
     #[serde(rename = "firstMeaningfulPaint")]
-    first_meaningful_paint: AuditValue,
+    first_meaningful_paint: AuditSimple,
 
     #[serde(rename = "firstCpuIdle")]
-    first_cpu_idle: AuditValue,
+    first_cpu_idle: AuditSimple,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
