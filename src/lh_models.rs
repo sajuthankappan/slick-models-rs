@@ -158,7 +158,7 @@ pub struct AuditTable<T> {
     score: Option<f64>,
 
     #[serde(rename = "scoreDisplayMode")]
-    score_display_mode: String,
+    score_display_mode: Option<String>,
 
     #[serde(rename = "numericValue")]
     numeric_value: Option<f64>,
