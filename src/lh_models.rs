@@ -299,7 +299,7 @@ pub struct ThirdPartyEntity {
 #[getset(get = "pub", set = "pub")]
 pub struct Filmstrip {
     timing: i64,
-    timestamp: i64,
+    timestamp: f64,
     data: String,
 }
 
