@@ -58,7 +58,7 @@ pub struct Audits {
     largest_contentful_paint: Option<AuditSimple>,
 
     #[serde(rename = "largest-contentful-paint-element")]
-    largest_contentful_paint_element: Option<AuditTable<NodeContainer>>,
+    largest_contentful_paint_element: Option<AuditTable<Node>>,
 
     #[serde(rename = "first-meaningful-paint")]
     first_meaningful_paint: AuditSimple,
@@ -106,25 +106,37 @@ pub struct Audits {
     third_party_summary: AuditTable<ThirdPartyDetail>,
 
     #[serde(rename = "screenshot-thumbnails")]
-    screenshot_thumbnails: AuditTable<Filmstrip>,
+    screenshot_thumbnails: Audit<Filmstrip>,
+
+    #[serde(rename = "uses-responsive-images")]
+    uses_responsive_images: Audit<Opportunity>,
+
+    #[serde(rename = "uses-optimized-images")]
+    uses_optimized_images: Audit<Opportunity>,
+
+    #[serde(rename = "uses-webp-images")]
+    uses_webp_images: Audit<Opportunity>,
+
+    #[serde(rename = "offscreen-images")]
+    offscreen_images: Audit<Opportunity>,
+
+    #[serde(rename = "uses-http2")]
+    uses_http2: AuditTable<UrlProtocol>,
+
     //TODOs
     //layout-shift-elements
     //uses-long-cache-ttl
     //total-byte-weight
-    //offscreen-images
     //render-blocking-resources
     //unminified-css
     //unminified-javascript
     //unused-css-rules"
     //unused-javascript
-    //uses-webp-images
-    //uses-optimized-images
     //uses-text-compression
-    //uses-responsive-images
     //efficient-animated-content
     //dom-size
     //no-document-write
-    //uses-http2
+    //
     //uses-passive-event-listeners
 }
 
@@ -151,7 +163,7 @@ pub struct AuditSimple {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct AuditTable<T> {
+pub struct Audit<T> {
     id: String,
     title: String,
     description: String,
@@ -169,19 +181,21 @@ pub struct AuditTable<T> {
     #[serde(rename = "displayValue")]
     display_value: Option<String>,
 
-    details: Details<T>,
+    details: T,
 }
+
+pub type AuditTable<T> = Audit<Table<T>>;
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct Details<T> {
-    headings: Option<Vec<Heading>>,
+pub struct Table<T> {
+    headings: Option<Vec<TableHeading>>,
     items: Vec<T>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct Heading {
+pub struct TableHeading {
     key: String,
 
     #[serde(rename = "itemType")]
@@ -191,6 +205,40 @@ pub struct Heading {
     display_unit: Option<String>,
 
     text: String,
+}
+
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct Opportunity {
+    headings: Option<Vec<OpportunityColumnHeading>>,
+    items: Vec<OpportunityItem>,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct OpportunityColumnHeading {
+    key: String,
+
+    #[serde(rename = "valueType")]
+    value_type: String,
+
+    label: String,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct OpportunityItem {
+    url: String,
+
+    #[serde(rename = "totalBytes")]
+    total_bytes: i64,
+
+    #[serde(rename = "wastedBytes")]
+    wasted_bytes: f64,
+
+    #[serde(rename = "wastedPercent")]
+    wasted_percent: Option<f64>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
@@ -253,18 +301,20 @@ pub struct Resource {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct NodeContainer {
-    node: Node,
+pub struct Node {
+    node: NodeValue,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct Node {
+pub struct NodeValue {
     #[serde(rename = "type")]
     node_type: String,
-    path: String,
-    selector: String,
-    snippet: String,
+    path: Option<String>,
+    selector: Option<String>,
+    snippet: Option<String>,
+    #[serde(rename = "nodeLabel")]
+    node_label: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
@@ -298,6 +348,13 @@ pub struct ThirdPartyEntity {
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct Filmstrip {
+    scale: i64,
+    items: Vec<FilmstripItem>,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct FilmstripItem {
     timing: i64,
     timestamp: f64,
     data: String,

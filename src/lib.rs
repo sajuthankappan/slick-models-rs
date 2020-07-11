@@ -3,8 +3,8 @@ pub mod lh_models;
 use bson::oid::ObjectId;
 use getset::{Getters, Setters};
 use lh_models::{
-    AuditSimple, AuditTable, Filmstrip, NetworkRequest, NodeContainer, Resource, ThirdPartyDetail,
-    Throttling,
+    Audit, AuditSimple, AuditTable, Filmstrip, NetworkRequest, Node, Opportunity, Resource,
+    ThirdPartyDetail, Throttling, UrlProtocol,
 };
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -59,7 +59,7 @@ pub struct AuditDetail {
     web_vitals: WebVitals,
 
     #[serde(rename = "largestContentfulPaintElement")]
-    largest_contentful_paint_element: Option<AuditTable<NodeContainer>>,
+    largest_contentful_paint_element: Option<AuditTable<Node>>,
 
     #[serde(rename = "networkRequests")]
     network_requests: Option<AuditTable<NetworkRequest>>,
@@ -71,7 +71,22 @@ pub struct AuditDetail {
     third_party_summary: Option<AuditTable<ThirdPartyDetail>>,
 
     #[serde(rename = "screenshotThumbnails")]
-    screenshot_thumbnails: Option<AuditTable<Filmstrip>>,
+    screenshot_thumbnails: Option<Audit<Filmstrip>>,
+
+    #[serde(rename = "usesResponsiveImages")]
+    uses_responsive_images: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "usesOptimizedImages")]
+    uses_optimized_images: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "usesWebpImages")]
+    uses_webp_images: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "offscreenImages")]
+    offscreen_images: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "usesHttp2")]
+    uses_http2: Option<AuditTable<UrlProtocol>>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
