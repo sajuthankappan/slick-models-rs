@@ -121,7 +121,7 @@ pub struct Audits {
     offscreen_images: Audit<Opportunity>,
 
     #[serde(rename = "uses-http2")]
-    uses_http2: AuditTable<UrlProtocol>,
+    uses_http2: Option<AuditTable<UrlProtocol>>,
 
     //TODOs
     //layout-shift-elements
