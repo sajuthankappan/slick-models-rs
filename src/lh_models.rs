@@ -394,7 +394,7 @@ pub struct WorkBreakdownItem {
 pub struct LatencyItem {
     origin: String,
     #[serde(rename = "serverResponseTime")]
-    server_response_time: String,
+    server_response_time: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
