@@ -26,7 +26,7 @@ pub struct PageScoreParameters {
     #[serde(rename = "lighthouseVersion")]
     pub lighthouse_version: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    blocked_url_patterns: Option<Vec<String>>,
+    pub blocked_url_patterns: Option<Vec<String>>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default)]
