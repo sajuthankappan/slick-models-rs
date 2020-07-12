@@ -23,8 +23,11 @@ pub struct PageScoreParameters {
     pub throttling: Option<String>,
     pub attempts: Option<i8>,
     pub device: Option<String>,
+
     #[serde(rename = "lighthouseVersion")]
     pub lighthouse_version: Option<String>,
+
+    #[serde(rename = "blockedUrlPatterns")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub blocked_url_patterns: Option<Vec<String>>,
 }
