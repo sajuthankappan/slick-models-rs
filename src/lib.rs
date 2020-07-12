@@ -4,7 +4,7 @@ use bson::oid::ObjectId;
 use getset::{Getters, Setters};
 use lh_models::{
     Audit, AuditSimple, AuditTable, Filmstrip, LatencyItem, NetworkRequest, NetworkRttItem, Node,
-    Opportunity, Resource, ScriptExecutionItem, ThirdPartyDetail, Throttling, UrlProtocol,
+    Opportunity, Resource, ScriptExecutionItem, Task, ThirdPartyDetail, Throttling, UrlProtocol,
     WorkBreakdownItem,
 };
 use serde::{Deserialize, Serialize};
@@ -108,6 +108,9 @@ pub struct AuditDetail {
 
     #[serde(rename = "networkRtt")]
     network_rtt: Option<AuditTable<NetworkRttItem>>,
+
+    #[serde(rename = "mainThreadTasks")]
+    main_thread_tasks: Option<AuditTable<Task>>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
