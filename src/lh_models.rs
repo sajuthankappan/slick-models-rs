@@ -88,10 +88,7 @@ pub struct Audits {
     network_requests: AuditTable<NetworkRequest>,
 
     #[serde(rename = "network-rtt")]
-    network_rtt: AuditTable<NetworkRttDetail>,
-
-    #[serde(rename = "network-server-latency")]
-    network_server_latency: AuditSimple,
+    network_rtt: AuditTable<NetworkRttItem>,
 
     #[serde(rename = "main-thread-tasks")]
     main_thread_tasks: AuditTable<Task>,
@@ -123,6 +120,18 @@ pub struct Audits {
     #[serde(rename = "uses-http2")]
     uses_http2: Option<AuditTable<UrlProtocol>>,
 
+    #[serde(rename = "bootup-time")]
+    bootup_time: Option<AuditTable<ScriptExecutionItem>>,
+
+    #[serde(rename = "mainthread-work-breakdown")]
+    main_thread_work_breakdown: Option<AuditTable<WorkBreakdownItem>>,
+
+    #[serde(rename = "uses-rel-preconnect")]
+    uses_rel_preconnect: Option<AuditSimple>,
+
+    #[serde(rename = "network-server-latency")]
+    network_server_latency: Option<AuditTable<LatencyItem>>,
+
     //TODOs
     //layout-shift-elements
     //uses-long-cache-ttl
@@ -147,6 +156,7 @@ pub struct AuditSimple {
     title: String,
     description: String,
     score: Option<f64>,
+    warnings: Option<Vec<String>>,
 
     #[serde(rename = "scoreDisplayMode")]
     score_display_mode: Option<String>,
@@ -168,6 +178,7 @@ pub struct Audit<T> {
     title: String,
     description: String,
     score: Option<f64>,
+    warnings: Option<Vec<String>>,
 
     #[serde(rename = "scoreDisplayMode")]
     score_display_mode: Option<String>,
@@ -206,7 +217,6 @@ pub struct TableHeading {
 
     text: String,
 }
-
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
@@ -273,7 +283,7 @@ pub struct NetworkRequest {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct NetworkRttDetail {
+pub struct NetworkRttItem {
     origin: String,
     rtt: f64,
 }
@@ -358,6 +368,33 @@ pub struct FilmstripItem {
     timing: i64,
     timestamp: f64,
     data: String,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct ScriptExecutionItem {
+    url: String,
+    total: f64,
+    scripting: f64,
+    #[serde(rename = "scriptParseCompile")]
+    script_parse_compile: f64,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct WorkBreakdownItem {
+    group: String,
+    #[serde(rename = "groupLabel")]
+    group_label: String,
+    duration: f64,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct LatencyItem {
+    origin: String,
+    #[serde(rename = "serverResponseTime")]
+    server_response_time: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]

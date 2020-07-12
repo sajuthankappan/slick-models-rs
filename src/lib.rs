@@ -3,8 +3,9 @@ pub mod lh_models;
 use bson::oid::ObjectId;
 use getset::{Getters, Setters};
 use lh_models::{
-    Audit, AuditSimple, AuditTable, Filmstrip, NetworkRequest, Node, Opportunity, Resource,
-    ThirdPartyDetail, Throttling, UrlProtocol,
+    Audit, AuditSimple, AuditTable, Filmstrip, LatencyItem, NetworkRequest, NetworkRttItem, Node,
+    Opportunity, Resource, ScriptExecutionItem, ThirdPartyDetail, Throttling, UrlProtocol,
+    WorkBreakdownItem,
 };
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -92,6 +93,21 @@ pub struct AuditDetail {
 
     #[serde(rename = "usesHttp2")]
     uses_http2: Option<AuditTable<UrlProtocol>>,
+
+    #[serde(rename = "bootupTime")]
+    bootup_time: Option<AuditTable<ScriptExecutionItem>>,
+
+    #[serde(rename = "mainThreadWorkBreakdown")]
+    main_thread_work_breakdown: Option<AuditTable<WorkBreakdownItem>>,
+
+    #[serde(rename = "usesRelPreconnect")]
+    uses_rel_preconnect: Option<AuditSimple>,
+
+    #[serde(rename = "networkServerLatency")]
+    network_server_latency: Option<AuditTable<LatencyItem>>,
+
+    #[serde(rename = "networkRtt")]
+    network_rtt: Option<AuditTable<NetworkRttItem>>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
@@ -236,7 +252,6 @@ impl AuditProfile {
             lighthouse_version,
             enabled: None,
             blocked_url_patterns: None,
-
         }
     }
 }
