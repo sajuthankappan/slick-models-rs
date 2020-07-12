@@ -214,6 +214,10 @@ pub struct AuditProfile {
     lighthouse_version: String,
 
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "enabled")]
+    enabled: Option<bool>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(rename = "blockedUrlPatterns")]
     blocked_url_patterns: Option<Vec<String>>,
 }
@@ -230,7 +234,9 @@ impl AuditProfile {
             name,
             device,
             lighthouse_version,
+            enabled: None,
             blocked_url_patterns: None,
+
         }
     }
 }
