@@ -15,6 +15,41 @@ use std::collections::HashMap;
 pub struct ScoreParameters {
     pub page: Option<PageScoreParameters>,
     pub site: Option<SiteScoreParameters>,
+    pub cookie: Option<Cookie>,
+}
+
+impl ScoreParameters {
+    pub fn for_page(page: PageScoreParameters) -> ScoreParameters {
+        ScoreParameters {
+            page: Some(page),
+            site: None,
+            cookie: None,
+        }
+    }
+
+    pub fn for_site(site: SiteScoreParameters) -> ScoreParameters {
+        ScoreParameters {
+            page: None,
+            site: Some(site),
+            cookie: None,
+        }
+    }
+
+    pub fn for_page_with_cookie(page: PageScoreParameters, cookie: Cookie) -> ScoreParameters {
+        ScoreParameters {
+            page: Some(page),
+            site: None,
+            cookie: Some(cookie),
+        }
+    }
+
+    pub fn for_site_with_cookie(site: SiteScoreParameters, cookie: Cookie) -> ScoreParameters {
+        ScoreParameters {
+            page: None,
+            site: Some(site),
+            cookie: Some(cookie),
+        }
+    }
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default)]
