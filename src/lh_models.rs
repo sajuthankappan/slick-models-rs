@@ -132,15 +132,23 @@ pub struct Audits {
     #[serde(rename = "network-server-latency")]
     network_server_latency: Option<AuditTable<LatencyItem>>,
 
+    #[serde(rename = "unminified-css")]
+    unminified_css: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "unminified-javascript")]
+    unminified_javascript: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "unused-css-rules")]
+    unused_css_rules: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "unused-javascript")]
+    unused_javascript: Option<Audit<Opportunity>>,
+
     //TODOs
     //layout-shift-elements
     //uses-long-cache-ttl
     //total-byte-weight
     //render-blocking-resources
-    //unminified-css
-    //unminified-javascript
-    //unused-css-rules"
-    //unused-javascript
     //uses-text-compression
     //efficient-animated-content
     //dom-size
@@ -249,6 +257,9 @@ pub struct OpportunityItem {
 
     #[serde(rename = "wastedPercent")]
     wasted_percent: Option<f64>,
+
+    #[serde(rename = "requestStartTime")]
+    request_start_time: Option<f64>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]

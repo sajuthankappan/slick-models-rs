@@ -111,6 +111,18 @@ pub struct AuditDetail {
 
     #[serde(rename = "mainThreadTasks")]
     main_thread_tasks: Option<AuditTable<Task>>,
+
+    #[serde(rename = "unminifiedCss")]
+    unminified_css: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "unminifiedJavascript")]
+    unminified_javascript: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "unusedCssRules")]
+    unused_css_rules: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "unusedJavascript")]
+    unused_javascript: Option<Audit<Opportunity>>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
