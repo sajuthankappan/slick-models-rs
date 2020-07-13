@@ -48,6 +48,7 @@ pub struct PageScoreParameters {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub blocked_url_patterns: Option<Vec<String>>,
 
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub cookie: Option<Cookie>,
 }
 
