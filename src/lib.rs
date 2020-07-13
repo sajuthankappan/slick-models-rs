@@ -462,3 +462,16 @@ impl SiteTread {
         self.page_audit_summaries.push(page_audit_summary);
     }
 }
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct Cookie {
+    name: String,
+    value: String,
+}
+
+impl Cookie {
+    pub fn new(name: String, value: String) -> Cookie {
+        Cookie { name, value }
+    }
+}
