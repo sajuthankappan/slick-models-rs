@@ -15,7 +15,6 @@ use std::collections::HashMap;
 pub struct ScoreParameters {
     pub page: Option<PageScoreParameters>,
     pub site: Option<SiteScoreParameters>,
-    pub cookie: Option<Cookie>,
 }
 
 impl ScoreParameters {
@@ -23,7 +22,6 @@ impl ScoreParameters {
         ScoreParameters {
             page: Some(page),
             site: None,
-            cookie: None,
         }
     }
 
@@ -31,23 +29,6 @@ impl ScoreParameters {
         ScoreParameters {
             page: None,
             site: Some(site),
-            cookie: None,
-        }
-    }
-
-    pub fn for_page_with_cookie(page: PageScoreParameters, cookie: Cookie) -> ScoreParameters {
-        ScoreParameters {
-            page: Some(page),
-            site: None,
-            cookie: Some(cookie),
-        }
-    }
-
-    pub fn for_site_with_cookie(site: SiteScoreParameters, cookie: Cookie) -> ScoreParameters {
-        ScoreParameters {
-            page: None,
-            site: Some(site),
-            cookie: Some(cookie),
         }
     }
 }
@@ -66,6 +47,8 @@ pub struct PageScoreParameters {
     #[serde(rename = "blockedUrlPatterns")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub blocked_url_patterns: Option<Vec<String>>,
+
+    pub cookie: Option<Cookie>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default)]
@@ -73,6 +56,8 @@ pub struct PageScoreParameters {
 pub struct SiteScoreParameters {
     #[serde(rename = "siteId")]
     pub site_id: String,
+
+    pub cookie: Option<Cookie>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
