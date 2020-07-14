@@ -58,6 +58,7 @@ pub struct SiteScoreParameters {
     #[serde(rename = "siteId")]
     pub site_id: String,
 
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub cookie: Option<Cookie>,
 }
 
