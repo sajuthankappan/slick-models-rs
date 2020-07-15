@@ -231,9 +231,6 @@ pub struct Site {
     #[serde(rename = "auditProfiles")]
     audit_profiles: Vec<AuditProfile>,
 
-    #[serde(rename = "lighthouseSettings")]
-    lighthouse_settings: LighthouseSettings,
-
     #[serde(rename = "lastRunId")]
     last_run_id: i32,
 }
@@ -352,104 +349,6 @@ impl AuditSummary {
             web_vitals,
             audit_detail_id,
         }
-    }
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct AuditSummaryOld {
-    #[serde(rename = "pageName")]
-    page_name: String,
-
-    #[serde(rename = "auditProfile")]
-    audit_profile: AuditProfile,
-
-    #[serde(rename = "lighthouseVersion")]
-    lighthouse_version: String,
-
-    #[serde(rename = "requestedUrl")]
-    requested_url: String,
-
-    #[serde(rename = "finalUrl")]
-    final_url: String,
-
-    #[serde(rename = "fetchTime")]
-    fetch_time: String,
-
-    #[serde(rename = "categories")]
-    categories: Categories,
-
-    #[serde(rename = "configSettings")]
-    config_settings: ConfigSettings,
-
-    #[serde(rename = "webVitals")]
-    web_vitals: WebVitals,
-
-    #[serde(rename = "auditDetailId")]
-    audit_detail_id: ObjectId,
-}
-
-impl AuditSummaryOld {
-    pub fn new(
-        page_name: String,
-        audit_profile: AuditProfile,
-        lighthouse_version: String,
-        requested_url: String,
-        final_url: String,
-        fetch_time: String,
-        categories: Categories,
-        config_settings: ConfigSettings,
-        web_vitals: WebVitals,
-        audit_detail_id: ObjectId,
-    ) -> AuditSummaryOld {
-        AuditSummaryOld {
-            page_name,
-            audit_profile,
-            lighthouse_version,
-            requested_url,
-            final_url,
-            fetch_time,
-            categories,
-            config_settings,
-            web_vitals,
-            audit_detail_id,
-        }
-    }
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct PageAuditSummary {
-    #[serde(rename = "siteId")]
-    site_id: ObjectId,
-
-    #[serde(rename = "pageName")]
-    page_name: String,
-
-    #[serde(rename = "url")]
-    url: String,
-
-    #[serde(rename = "auditSummaries")]
-    audit_summaries: HashMap<String, AuditSummaryOld>,
-}
-
-impl PageAuditSummary {
-    pub fn new(site_id: ObjectId, page_name: String, url: String) -> PageAuditSummary {
-        PageAuditSummary {
-            site_id,
-            page_name,
-            url,
-            audit_summaries: HashMap::new(),
-        }
-    }
-
-    pub fn add_audit_summary(&mut self, audit_summary: AuditSummaryOld) {
-        let audit_profile_name = format!(
-            "{}-{}",
-            audit_summary.audit_profile.device, audit_summary.lighthouse_version
-        );
-        self.audit_summaries
-            .insert(audit_profile_name, audit_summary);
     }
 }
 
