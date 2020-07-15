@@ -8,7 +8,6 @@ use lh_models::{
     WorkBreakdownItem,
 };
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default)]
 #[getset(get = "pub", set = "pub")]
@@ -349,38 +348,6 @@ impl AuditSummary {
             web_vitals,
             audit_detail_id,
         }
-    }
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct SiteTread {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(rename = "_id")]
-    id: Option<ObjectId>,
-
-    #[serde(rename = "siteId")]
-    site_id: ObjectId,
-
-    #[serde(rename = "siteName")]
-    site_name: String,
-
-    #[serde(rename = "pageAuditSummaries")]
-    page_audit_summaries: Vec<PageAuditSummary>,
-}
-
-impl SiteTread {
-    pub fn new(site_id: ObjectId, site_name: String) -> SiteTread {
-        SiteTread {
-            id: None,
-            site_id,
-            site_name,
-            page_audit_summaries: Vec::new(),
-        }
-    }
-
-    pub fn add_page_audit_summary(&mut self, page_audit_summary: PageAuditSummary) {
-        self.page_audit_summaries.push(page_audit_summary);
     }
 }
 
