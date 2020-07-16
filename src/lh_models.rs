@@ -428,7 +428,7 @@ pub struct CachePolicyItem {
     total_bytes: i64,
 
     #[serde(rename = "wastedBytes")]
-    wasted_bytes: i64,
+    wasted_bytes: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
