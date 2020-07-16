@@ -144,11 +144,16 @@ pub struct Audits {
     #[serde(rename = "unused-javascript")]
     unused_javascript: Option<Audit<Opportunity>>,
 
+    #[serde(rename = "render-blocking-resources")]
+    render_blocking_resources: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "uses-long-cache-ttl")]
+    uses_long_cache_ttl: Option<AuditTable<CachePolicyItem>>,
+
     //TODOs
     //layout-shift-elements
-    //uses-long-cache-ttl
+    //
     //total-byte-weight
-    //render-blocking-resources
     //uses-text-compression
     //efficient-animated-content
     //dom-size
@@ -254,6 +259,9 @@ pub struct OpportunityItem {
 
     #[serde(rename = "wastedBytes")]
     wasted_bytes: f64,
+
+    #[serde(rename = "wastedMs")]
+    wasted_ms: Option<i64>,
 
     #[serde(rename = "wastedPercent")]
     wasted_percent: Option<f64>,
@@ -406,6 +414,21 @@ pub struct LatencyItem {
     origin: String,
     #[serde(rename = "serverResponseTime")]
     server_response_time: f64,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct CachePolicyItem {
+    url: String,
+
+    #[serde(rename = "cacheLifetimeMs")]
+    cache_lifetime_ms: i64,
+
+    #[serde(rename = "totalBytes")]
+    total_bytes: i64,
+
+    #[serde(rename = "wastedBytes")]
+    wasted_bytes: i64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]

@@ -3,9 +3,9 @@ pub mod lh_models;
 use bson::oid::ObjectId;
 use getset::{Getters, Setters};
 use lh_models::{
-    Audit, AuditSimple, AuditTable, Filmstrip, LatencyItem, NetworkRequest, NetworkRttItem, Node,
-    Opportunity, Resource, ScriptExecutionItem, Task, ThirdPartyDetail, Throttling, UrlProtocol,
-    WorkBreakdownItem,
+    Audit, AuditSimple, AuditTable, CachePolicyItem, Filmstrip, LatencyItem, NetworkRequest,
+    NetworkRttItem, Node, Opportunity, Resource, ScriptExecutionItem, Task, ThirdPartyDetail,
+    Throttling, UrlProtocol, WorkBreakdownItem,
 };
 use serde::{Deserialize, Serialize};
 
@@ -144,6 +144,12 @@ pub struct AuditDetail {
 
     #[serde(rename = "unusedJavascript")]
     unused_javascript: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "renderBlockingResources")]
+    render_blocking_resources: Option<Audit<Opportunity>>,
+
+    #[serde(rename = "usesLongCacheTtl")]
+    uses_long_cache_ttl: Option<AuditTable<CachePolicyItem>>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
