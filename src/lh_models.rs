@@ -258,7 +258,7 @@ pub struct OpportunityItem {
     total_bytes: i64,
 
     #[serde(rename = "wastedBytes")]
-    wasted_bytes: f64,
+    wasted_bytes: Option<f64>,
 
     #[serde(rename = "wastedMs")]
     wasted_ms: Option<i64>,
