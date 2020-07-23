@@ -242,25 +242,18 @@ pub struct Site {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
-pub struct SiteBasic {
+pub struct GroupSite {
     #[serde(rename = "_id")]
     id: ObjectId,
 
-    #[serde(rename = "name")]
-    name: String,
-}
+    #[serde(rename = "groupId")]
+    group_id: ObjectId,
 
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct Group {
-    #[serde(rename = "_id")]
-    id: ObjectId,
+    #[serde(rename = "siteId")]
+    site_id: ObjectId,
 
-    #[serde(rename = "name")]
-    name: String,
-
-    #[serde(rename = "sites")]
-    sites: Vec<SiteBasic>,
+    #[serde(rename = "siteName")]
+    site_name: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
