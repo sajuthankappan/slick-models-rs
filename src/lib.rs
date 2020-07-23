@@ -260,7 +260,7 @@ pub struct Group {
     name: String,
 
     #[serde(rename = "groups")]
-    groups: Vec<SiteBasic>,
+    sites: Vec<SiteBasic>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
