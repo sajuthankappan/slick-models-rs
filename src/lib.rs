@@ -259,7 +259,7 @@ pub struct Group {
     #[serde(rename = "name")]
     name: String,
 
-    #[serde(rename = "groups")]
+    #[serde(rename = "sites")]
     sites: Vec<SiteBasic>,
 }
 
