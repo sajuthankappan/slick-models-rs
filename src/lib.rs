@@ -239,6 +239,8 @@ pub struct Site {
     #[serde(rename = "lastRunId")]
     last_run_id: i32,
 
+    #[serde(rename = "authentication")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     authentication: Option<Authentication>,
 }
 
