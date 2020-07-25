@@ -238,6 +238,33 @@ pub struct Site {
 
     #[serde(rename = "lastRunId")]
     last_run_id: i32,
+
+    authentication: Option<Authentication>,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct Authentication {
+    #[serde(rename = "type")]
+    authentication_type: AuthenticationType,
+
+    #[serde(rename = "cookie")]
+    cookie: Option<Cookie>,
+}
+
+impl Authentication {
+    pub fn from_cookie(cookie: Cookie) -> Authentication {
+        Authentication {
+            authentication_type: AuthenticationType::Cookie,
+            cookie: Some(cookie),
+        }
+    }
+}
+
+#[derive(Deserialize, Serialize, Debug, Clone)]
+pub enum AuthenticationType {
+    Cookie,
+    None,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
