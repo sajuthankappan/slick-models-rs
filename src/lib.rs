@@ -314,6 +314,10 @@ impl AuditProfile {
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct AuditSummary {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "_id")]
+    id: Option<ObjectId>,
+
     #[serde(rename = "siteId")]
     site_id: ObjectId,
 
@@ -359,6 +363,7 @@ impl AuditSummary {
         audit_detail_id: ObjectId,
     ) -> AuditSummary {
         AuditSummary {
+            id: None,
             site_id,
             site_run_id,
             page_id,
