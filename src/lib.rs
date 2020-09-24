@@ -61,6 +61,14 @@ pub struct SiteScoreParameters {
     pub cookie: Option<Cookie>,
 }
 
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default)]
+#[getset(get = "pub", set = "pub")]
+pub struct RegisterUserParameters {
+    #[serde(rename = "registrationCode")]
+    pub registration_code: String,
+}
+
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct AuditDetail {
