@@ -5,7 +5,7 @@ use getset::{Getters, Setters};
 use lh_models::{
     Audit, AuditSimple, AuditTable, CachePolicyItem, Filmstrip, LatencyItem, NetworkRequest,
     NetworkRttItem, Node, Opportunity, Resource, ScriptExecutionItem, Task, ThirdPartyDetail,
-    Throttling, UrlProtocol, WorkBreakdownItem,
+    Throttling, WorkBreakdownItem,
 };
 use serde::{Deserialize, Serialize};
 
@@ -113,7 +113,7 @@ pub struct AuditDetail {
     offscreen_images: Option<Audit<Opportunity>>,
 
     #[serde(rename = "usesHttp2")]
-    uses_http2: Option<AuditTable<UrlProtocol>>,
+    uses_http2: Option<Audit<Opportunity>>,
 
     #[serde(rename = "bootupTime")]
     bootup_time: Option<AuditTable<ScriptExecutionItem>>,

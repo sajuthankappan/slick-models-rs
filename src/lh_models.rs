@@ -118,7 +118,7 @@ pub struct Audits {
     offscreen_images: Audit<Opportunity>,
 
     #[serde(rename = "uses-http2")]
-    uses_http2: Option<AuditTable<UrlProtocol>>,
+    uses_http2: Option<Audit<Opportunity>>,
 
     #[serde(rename = "bootup-time")]
     bootup_time: Option<AuditTable<ScriptExecutionItem>>,
@@ -344,13 +344,6 @@ pub struct NodeValue {
     snippet: Option<String>,
     #[serde(rename = "nodeLabel")]
     node_label: Option<String>,
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-pub struct UrlProtocol {
-    url: String,
-    protocol: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
