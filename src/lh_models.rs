@@ -255,7 +255,7 @@ pub struct OpportunityItem {
     url: String,
 
     #[serde(rename = "totalBytes")]
-    total_bytes: i64,
+    total_bytes: Option<i64>,
 
     #[serde(rename = "wastedBytes")]
     wasted_bytes: Option<f64>,
@@ -268,6 +268,9 @@ pub struct OpportunityItem {
 
     #[serde(rename = "requestStartTime")]
     request_start_time: Option<f64>,
+
+    #[serde(rename = "protocol")]
+    protocol: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
