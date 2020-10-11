@@ -438,7 +438,7 @@ pub struct UserTiming {
     #[serde(rename = "startTime")]
     start_time: f64,
 
-    duration: Option<i64>,
+    duration: Option<f64>,
 
     #[serde(rename = "timingType")]
     timing_type: f64,
