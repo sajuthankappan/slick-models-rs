@@ -150,6 +150,9 @@ pub struct Audits {
     #[serde(rename = "uses-long-cache-ttl")]
     uses_long_cache_ttl: Option<AuditTable<CachePolicyItem>>,
 
+    #[serde(rename = "user-timings")]
+    user_timings: Option<AuditTable<UserTiming>>,
+
     //TODOs
     //layout-shift-elements
     //
@@ -425,6 +428,20 @@ pub struct CachePolicyItem {
 
     #[serde(rename = "wastedBytes")]
     wasted_bytes: f64,
+}
+
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+pub struct UserTiming {
+    name: String,
+
+    #[serde(rename = "startTime")]
+    start_time: f64,
+
+    duration: Option<i64>,
+
+    #[serde(rename = "timingType")]
+    timing_type: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]

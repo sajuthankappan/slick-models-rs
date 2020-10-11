@@ -5,7 +5,7 @@ use getset::{Getters, Setters};
 use lh_models::{
     Audit, AuditSimple, AuditTable, CachePolicyItem, Filmstrip, LatencyItem, NetworkRequest,
     NetworkRttItem, Node, Opportunity, Resource, ScriptExecutionItem, Task, ThirdPartyDetail,
-    Throttling, WorkBreakdownItem,
+    Throttling, UserTiming, WorkBreakdownItem,
 };
 use serde::{Deserialize, Serialize};
 
@@ -150,6 +150,9 @@ pub struct AuditDetail {
 
     #[serde(rename = "usesLongCacheTtl")]
     uses_long_cache_ttl: Option<AuditTable<CachePolicyItem>>,
+
+    #[serde(rename = "userTimings")]
+    user_timings: Option<AuditTable<UserTiming>>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
