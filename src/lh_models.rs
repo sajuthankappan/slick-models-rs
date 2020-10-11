@@ -441,7 +441,7 @@ pub struct UserTiming {
     duration: Option<f64>,
 
     #[serde(rename = "timingType")]
-    timing_type: f64,
+    timing_type: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
