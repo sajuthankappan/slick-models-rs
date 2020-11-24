@@ -155,6 +155,16 @@ pub struct Site {
     authentication: Option<Authentication>,
 }
 
+#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
+#[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
+pub struct SiteGroup {
+    #[serde(rename = "_id")]
+    id: ObjectId,
+    name: String,
+    group_id: Option<ObjectId>,
+}
+
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Clone)]
 #[getset(get = "pub", set = "pub")]
 #[serde(rename_all = "camelCase")]
