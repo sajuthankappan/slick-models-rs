@@ -158,7 +158,7 @@ pub struct Site {
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 #[serde(rename_all = "camelCase")]
-pub struct SiteGroup {
+pub struct MetaSite {
     #[serde(rename = "_id")]
     id: ObjectId,
     name: String,
@@ -187,17 +187,6 @@ impl Authentication {
 pub enum AuthenticationType {
     Cookie,
     None,
-}
-
-#[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
-#[getset(get = "pub", set = "pub")]
-#[serde(rename_all = "camelCase")]
-pub struct GroupSite {
-    #[serde(rename = "_id")]
-    id: ObjectId,
-    group_id: ObjectId,
-    site_id: ObjectId,
-    site_name: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
