@@ -144,8 +144,9 @@ pub struct LighthouseSettings {
 #[getset(get = "pub", set = "pub")]
 #[serde(rename_all = "camelCase")]
 pub struct Site {
+    #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(rename = "_id")]
-    id: ObjectId,
+    id: Option<ObjectId>,
     name: String,
     group_id: Option<ObjectId>,
     pages: Vec<Page>,
