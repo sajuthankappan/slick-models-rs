@@ -3,11 +3,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct AllAttemptReports {
-    #[serde(rename = "bestScore")]
     best_score: f64,
-
-    #[serde(rename = "bestScoreIndex")]
     best_score_index: usize,
 
     #[serde(rename = "results")]
@@ -16,28 +14,15 @@ pub struct AllAttemptReports {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct Report {
-    #[serde(rename = "lighthouseVersion")]
     lighthouse_version: String,
-
-    #[serde(rename = "requestedUrl")]
     requested_url: String,
-
-    #[serde(rename = "finalUrl")]
     final_url: String,
-
-    #[serde(rename = "fetchTime")]
     fetch_time: String,
-
-    #[serde(rename = "environment")]
     environment: Environment,
-
     audits: Audits,
-
-    #[serde(rename = "configSettings")]
     config_settings: ConfigSettings,
-
-    #[serde(rename = "categories")]
     categories: Categories,
     //TODOs
     //categoryGroups
@@ -167,47 +152,32 @@ pub struct Audits {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct AuditSimple {
     id: String,
     title: String,
     description: String,
     score: Option<f64>,
     warnings: Option<Vec<String>>,
-
-    #[serde(rename = "scoreDisplayMode")]
     score_display_mode: Option<String>,
-
-    #[serde(rename = "numericValue")]
     numeric_value: Option<f64>,
-
-    #[serde(rename = "numericUnit")]
     numeric_unit: Option<String>,
-
-    #[serde(rename = "displayValue")]
     display_value: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct Audit<T> {
     id: String,
     title: String,
     description: String,
     score: Option<f64>,
     warnings: Option<Vec<String>>,
-
-    #[serde(rename = "scoreDisplayMode")]
     score_display_mode: Option<String>,
-
-    #[serde(rename = "numericValue")]
     numeric_value: Option<f64>,
-
-    #[serde(rename = "numericUnit")]
     numeric_unit: Option<String>,
-
-    #[serde(rename = "displayValue")]
     display_value: Option<String>,
-
     details: T,
 }
 
@@ -222,15 +192,11 @@ pub struct Table<T> {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct TableHeading {
     key: String,
-
-    #[serde(rename = "itemType")]
     item_type: String,
-
-    #[serde(rename = "displayUnit")]
     display_unit: Option<String>,
-
     text: String,
 }
 
@@ -243,66 +209,38 @@ pub struct Opportunity {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct OpportunityColumnHeading {
     key: String,
-
-    #[serde(rename = "valueType")]
     value_type: String,
-
     label: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct OpportunityItem {
     url: String,
-
-    #[serde(rename = "totalBytes")]
     total_bytes: Option<i64>,
-
-    #[serde(rename = "wastedBytes")]
     wasted_bytes: Option<f64>,
-
-    #[serde(rename = "wastedMs")]
     wasted_ms: Option<i64>,
-
-    #[serde(rename = "wastedPercent")]
     wasted_percent: Option<f64>,
-
-    #[serde(rename = "requestStartTime")]
     request_start_time: Option<f64>,
-
-    #[serde(rename = "protocol")]
     protocol: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct NetworkRequest {
     url: String,
-
-    #[serde(rename = "startTime")]
     start_time: Option<f64>,
-
-    #[serde(rename = "endTime")]
     end_time: Option<f64>,
-
-    #[serde(rename = "finished")]
     finished: Option<bool>,
-
-    #[serde(rename = "transferSize")]
     transfer_size: Option<i64>,
-
-    #[serde(rename = "resourceSize")]
     resource_size: i64,
-
-    #[serde(rename = "statusCode")]
     status_code: i16,
-
-    #[serde(rename = "mimeType")]
     mime_type: String,
-
-    #[serde(rename = "resourceType")]
     resource_type: Option<String>,
 }
 
@@ -315,22 +253,19 @@ pub struct NetworkRttItem {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct Task {
     duration: f64,
-    #[serde(rename = "startTime")]
     start_time: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct Resource {
-    #[serde(rename = "resourceType")]
     resource_type: String,
-    #[serde(rename = "label")]
     label: String,
-    #[serde(rename = "requestCount")]
     request_count: i32,
-    #[serde(rename = "transferSize")]
     transfer_size: Option<i64>,
 }
 
@@ -342,30 +277,29 @@ pub struct Node {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct NodeValue {
     #[serde(rename = "type")]
     node_type: String,
     path: Option<String>,
     selector: Option<String>,
     snippet: Option<String>,
-    #[serde(rename = "nodeLabel")]
     node_label: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct ThirdPartyDetail {
     entity: ThirdPartyEntity,
-    #[serde(rename = "transferSize")]
     transfer_size: i64,
-    #[serde(rename = "mainThreadTime")]
     main_thread_time: f64,
-    #[serde(rename = "blockingTime")]
     blocking_time: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct ThirdPartyEntity {
     #[serde(rename = "type")]
     entity_type: String,
@@ -390,135 +324,100 @@ pub struct FilmstripItem {
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct ScriptExecutionItem {
     url: String,
     total: f64,
     scripting: f64,
-    #[serde(rename = "scriptParseCompile")]
     script_parse_compile: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct WorkBreakdownItem {
     group: String,
-    #[serde(rename = "groupLabel")]
     group_label: String,
     duration: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct LatencyItem {
     origin: String,
-    #[serde(rename = "serverResponseTime")]
     server_response_time: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct CachePolicyItem {
     url: String,
-
-    #[serde(rename = "cacheLifetimeMs")]
     cache_lifetime_ms: i64,
-
-    #[serde(rename = "totalBytes")]
     total_bytes: i64,
-
-    #[serde(rename = "wastedBytes")]
     wasted_bytes: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct UserTiming {
     name: String,
-
-    #[serde(rename = "startTime")]
     start_time: f64,
-
     duration: Option<f64>,
-
-    #[serde(rename = "timingType")]
     timing_type: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct ConfigSettings {
-    #[serde(rename = "throttlingMethod")]
     throttling_method: String,
-
-    #[serde(rename = "throttling")]
     throttling: Throttling,
-
-    #[serde(rename = "auditMode")]
     audit_mode: bool,
-
-    #[serde(rename = "gatherMode")]
     gather_mode: bool,
-
-    #[serde(rename = "disableStorageReset")]
     disable_storage_reset: bool,
-
-    #[serde(rename = "emulatedFormFactor")]
     emulated_form_factor: String,
-
-    #[serde(rename = "internalDisableDeviceScreenEmulation")]
     internal_disable_device_screen_emulation: Option<bool>,
-
     channel: String,
-    //budgets: String, //TODO
     locale: String,
+    only_categories: Vec<String>,
+    //budgets: String, //TODO
     //blockedUrlPatterns: String, //TODO
     //additionalTraceCategories: String,
     //extraHeaders
     //precomputedLanternData
     //onlyAudits
-    #[serde(rename = "onlyCategories")]
-    only_categories: Vec<String>,
     //#[serde(rename = "skipAudits")]
     //skip_audits: Option<bool>,//TODO
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct Throttling {
-    #[serde(rename = "rttMs")]
     rtt_ms: i32,
-
-    #[serde(rename = "throughputKbps")]
     throughput_kbps: f64,
-
-    #[serde(rename = "requestLatencyMs")]
     request_latency_ms: f64,
-
-    #[serde(rename = "downloadThroughputKbps")]
     download_throughput_kbps: f64,
-
-    #[serde(rename = "uploadThroughputKbps")]
     upload_throughput_kbps: i16,
-
-    #[serde(rename = "cpuSlowdownMultiplier")]
     cpu_slowdown_multiplier: i16,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
 pub struct Categories {
-    #[serde(rename = "performance")]
     performance: Performance,
 }
 
 #[derive(Deserialize, Serialize, Debug, Getters, Setters, Default, Clone)]
 #[getset(get = "pub", set = "pub")]
+#[serde(rename_all = "camelCase")]
 pub struct Performance {
     id: String,
     title: String,
     score: f64,
-
-    #[serde(rename = "auditRefs")]
     audit_refs: Vec<AuditRef>,
 }
 
